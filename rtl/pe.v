@@ -80,6 +80,7 @@ module PE(clk, reset, ctrl, d0, d1, d2, out);
     always @ (posedge clk)
         if (reset) R3 <= 0;
         else if (c10) R3 <= ad2;
+        else R3 <= 0; /* change */
     assign out = R3;
 endmodule
 

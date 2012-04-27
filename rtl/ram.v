@@ -19,7 +19,7 @@
 
 module ram #(
     parameter DATA = 198,
-    parameter ADDR = 7
+    parameter ADDR = 6
 ) (
     input                       clk,
 
@@ -41,7 +41,7 @@ module ram #(
 
     initial begin : init
         integer i;
-        for(i = 0; i < 2**ADDR; i = i + 1)
+        for(i = 0; i < (2**ADDR); i = i + 1)
             mem[i] = 0;
     end
 

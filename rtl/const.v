@@ -30,20 +30,21 @@
  */
 module const (clk, addr, out, effective);
     input clk;
-    input [6:0] addr;
+    input [5:0] addr;
     output reg [197:0] out;
     output reg effective; // active high if out is effective
     
     always @ (posedge clk)
       begin
-        effective <= 1;
-        case (addr)
-            7'b1:     out <= 0;
-            7'b10:    out <= 1;
-            7'b100:   out <= {6'b000101, 192'd0};
-            7'b1000:  out <= {6'b001001, 192'd0};
-            7'b10000: out <= {6'b010101, 192'd0};
-            default:  begin out <= 0; effective <= 0; end
-        endcase
+         effective <= 1;
+         case (addr)
+            1:  out <= 0;
+            2:  out <= 1;
+            4:  out <= {6'b000101, 192'd0};
+            8:  out <= {6'b001001, 192'd0};
+            16: out <= {6'b010101, 192'd0};
+            default: 
+               begin out <= 0; effective <= 0; end
+         endcase
       end
 endmodule
