@@ -36,8 +36,8 @@ module tiny(clk, reset, sel, addr, w, data, out, done);
     /* for const */
     wire [197:0] const0_out, const1_out;
     wire const0_effective, const1_effective;
-    /* for mux */
-    wire [197:0] mux0_out, mux1_out;
+    /* for muxer */
+    wire [197:0] muxer0_out, muxer1_out;
     /* for ROM */
     wire [8:0] rom_addr;
     wire [25:0] rom_q;
@@ -57,11 +57,11 @@ module tiny(clk, reset, sel, addr, w, data, out, done);
         const1 (clk, ram_b_addr, const1_out, const1_effective);
     ram
         ram0 (clk, ram_a_w, ram_a_addr, data, ram_a_data_out, ram_b_w, ram_b_addr[5:0], ram_b_data_in, ram_b_data_out);
-    mux
-        mux0 (ram_a_data_out, const0_out, const0_effective, mux0_out),
-        mux1 (ram_b_data_out, const1_out, const1_effective, mux1_out);
+    muxer
+        muxer0 (ram_a_data_out, const0_out, const0_effective, muxer0_out),
+        muxer1 (ram_b_data_out, const1_out, const1_effective, muxer1_out);
     PE
-        pe0 (clk, reset, pe_ctrl, mux1_out, mux0_out[193:0], mux0_out[193:0], ram_b_data_in[193:0]);
+        pe0 (clk, reset, pe_ctrl, muxer1_out, muxer0_out[193:0], muxer0_out[193:0], ram_b_data_in[193:0]);
     
     assign ram_b_data_in[197:194] = 0;
 endmodule
@@ -78,7 +78,7 @@ module select(sel, addr_in, addr_fsm_in, w_in, addr_out, w_out);
     assign w_out = sel & w_in;
 endmodule
 
-module mux(from_ram, from_const, const_effective, out);
+module muxer(from_ram, from_const, const_effective, out);
     input [197:0] from_ram, from_const;
     input const_effective;
     output [197:0] out;
