@@ -47,18 +47,20 @@ module ram #(
 
     // Port A
     always @(posedge clk) begin
+        a_dout      <= mem[a_addr];
         if(a_wr) begin
+            a_dout      <= a_din;
             mem[a_addr] <= a_din;
         end
-        a_dout      <= mem[a_addr];
     end
 
     // Port B
     always @(posedge clk) begin
+        b_dout      <= mem[b_addr];
         if(b_wr) begin
+            b_dout      <= b_din;
             mem[b_addr] <= b_din;
         end
-        b_dout      <= mem[b_addr];
     end
 
 endmodule

@@ -59,10 +59,10 @@ module FSM(clk, reset, rom_addr, rom_q, ram_a_addr, ram_b_addr, ram_b_w, pe, don
           endcase
 
     /* we support two loops with 48 loop times */
-    parameter  LOOP1_START = 22,
-               LOOP1_END   = 117,
-               LOOP2_START = 280,
-               LOOP2_END   = 293;
+    parameter  LOOP1_START = 9'd22,
+               LOOP1_END   = 9'd117,
+               LOOP2_START = 9'd280,
+               LOOP2_END   = 9'd293;
     reg [46:0] loop1, loop2;
 	
 	always @ (posedge clk)
@@ -107,7 +107,7 @@ module FSM(clk, reset, rom_addr, rom_q, ram_a_addr, ram_b_addr, ram_b_w, pe, don
        default: ram_a_addr=0;
        endcase
     
-    parameter CMD_ADD=4, CMD_SUB=8, CMD_CUBIC=16,
+    parameter CMD_ADD=6'd4, CMD_SUB=6'd8, CMD_CUBIC=6'd16,
               ADD=2'd0, SUB=2'd1, CUBIC=2'd2, MULT=2'd3;
 
     always @ (posedge clk)
@@ -154,5 +154,5 @@ module FSM(clk, reset, rom_addr, rom_q, ram_a_addr, ram_b_addr, ram_b_w, pe, don
        default: ram_b_addr=0;
        endcase
 
-    assign ram_b_w = (state==WRITE) ? 1 : 0;
+    assign ram_b_w = (state==WRITE) ? 1'b1 : 1'b0;
 endmodule
