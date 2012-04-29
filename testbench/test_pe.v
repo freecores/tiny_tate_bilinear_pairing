@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `define P 20
 
-module test_PE;
+module test_pe;
 
 	// Inputs
 	reg clk;
@@ -49,8 +49,7 @@ module test_PE;
         reset=1;#`P reset=0;
         ctrl=11'b11111_000000; #`P;
         ctrl=11'b00000_111111; #(33*`P);
-        ctrl=0; #`P;
-        if(out !== wish) $display("E");
+        check;
         
         // test cubic
         d0 = {6'b10101, 192'd0};
@@ -62,11 +61,10 @@ module test_PE;
         reset=1;#`P reset=0;
         ctrl=11'b11111_000000; #`P;
         ctrl=1; #(33*`P);
-        ctrl=0; #`P;
-        if(out !== wish) $display("E");
+        check;
         
         // test add
-        d0 = {6'b101, 192'd0};
+        d0 = {6'b000101, 192'd0};
         d1 = 194'h0994544a41588446516618a14691a545542521a4158868428;
         d2 = 194'h1901269451681914415481656104980811a5a555155546949;
         wish = 194'h16954a129284915a928a9916a4954141659a96092a11a2165;
@@ -75,11 +73,10 @@ module test_PE;
         reset=1;#`P reset=0;
         ctrl=11'b11111_000000; #`P;
         ctrl=11'b10001; #(33*`P);
-        ctrl=0; #`P;
-        if(out !== wish) $display("E");
+        check;
 
         // test sub
-        d0 = {6'b1001, 192'd0};
+        d0 = {6'b001001, 192'd0};
         d1 = 194'h0994544a41588446516618a14691a545542521a4158868428;
         d2 = 194'h1901269451681914415481656104980811a5a555155546949;
         wish = 194'h209661a62020aa6210125a481599194946404852006625aa2;
@@ -88,12 +85,19 @@ module test_PE;
         reset=1;#`P reset=0;
         ctrl=11'b11111_000000; #`P;
         ctrl=11'b10001; #(33*`P);
-        ctrl=0; #`P;
-        if(out !== wish) $display("E");
+        check;
 
+        $display("Good!");
         $finish;
 	end
 
     initial #100 forever #(`P/2) clk = ~clk;
+
+    task check;
+        begin
+          if (out !== wish)
+            begin $display("E %h %h", out, wish); $finish; end
+        end
+    endtask
 endmodule
 

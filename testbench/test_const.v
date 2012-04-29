@@ -5,7 +5,7 @@ module test_const;
 
 	// Inputs
     reg clk;
-	reg [4:0] addr;
+	reg [5:0] addr;
 
 	// Outputs
 	wire [197:0] out;
@@ -34,14 +34,15 @@ module test_const;
         #(`P); check;
         addr = 2; w_out = 1;
         #(`P); check;
-        addr = 4; w_out = {4'b0101, 194'd0};
+        addr = 4; w_out = {6'b000101, 192'd0};
         #(`P); check;
-        addr = 8; w_out = {4'b0110, 194'd0};
+        addr = 8; w_out = {6'b001001, 192'd0};
         #(`P); check;
         addr = 16; w_out = {6'b010101, 192'd0};
         #(`P); check;
         addr = 0; w_out = 0; w_effective = 0;
         #(`P); check;
+        $display("Good");
         $finish;
 	end
 
@@ -50,7 +51,7 @@ module test_const;
     task check;
       begin
         if (out !== w_out || effective !== w_effective)
-            $display("E");
+            $display("E %d %h %h", addr, out, w_out);
       end
     endtask
 endmodule

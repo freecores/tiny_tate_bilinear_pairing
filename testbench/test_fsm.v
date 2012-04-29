@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `define P 20 // clock period
 
-module test_FSM;
+module test_fsm;
 
 	// Inputs
 	reg clk;
