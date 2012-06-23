@@ -108,7 +108,7 @@ module test_tiny;
             addr = adr;
             #(`P);
         end
-    endtask;
+    endtask
 
     task check;
         input [`WIDTH_D0:0] wish;
