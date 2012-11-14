@@ -28,8 +28,8 @@ module FSM(clk, reset, rom_addr, rom_q, ram_a_addr, ram_b_addr, ram_b_w, pe, don
     output reg [10:0] pe;
     output reg done;
     
-    reg [4:0] state;
-	parameter START=0, READ_SRC1=1, READ_SRC2=2, CALC=4, WAIT=8, WRITE=16, DON=3;
+    reg [5:0] state;
+    parameter START=0, READ_SRC1=1, READ_SRC2=2, CALC=4, WAIT=8, WRITE=16, DON=32;
 	
     wire [5:0] dest, src1, src2; wire [8:0] times; wire [1:0] op;
     assign {dest, src1, op, times, src2} = rom_q;
